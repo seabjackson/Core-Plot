@@ -223,7 +223,7 @@
                     <navigationItem key="navigationItem" id="YHS-fv-0KQ">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="waF-27-u5u">
-                            <rect key="frame" x="236" y="7" width="128" height="30"/>
+                            <rect key="frame" x="124" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Pie"/>
@@ -254,12 +254,27 @@
                     <view key="view" contentMode="scaleToFill" id="HdO-Iy-HN9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdd-d3-Rae" customClass="CPTGraphHostingView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.74826971476510062" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="fdd-d3-Rae" firstAttribute="top" secondItem="HdO-Iy-HN9" secondAttribute="top" id="1q7-in-iV2"/>
+                            <constraint firstItem="8zO-b4-9mE" firstAttribute="top" secondItem="fdd-d3-Rae" secondAttribute="bottom" id="9tl-sq-9sq"/>
+                            <constraint firstItem="fdd-d3-Rae" firstAttribute="leading" secondItem="HdO-Iy-HN9" secondAttribute="leading" id="FzU-tw-Cqy"/>
+                            <constraint firstAttribute="trailing" secondItem="fdd-d3-Rae" secondAttribute="trailing" id="jNd-Yf-9T1"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="hostView" destination="fdd-d3-Rae" id="iOl-cl-PEg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g1y-xc-Qp4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2290" y="738"/>
+            <point key="canvasLocation" x="2288.8000000000002" y="737.18140929535241"/>
         </scene>
         <!--Bar Graph View Controller-->
         <scene sceneID="gCO-rL-I2M">

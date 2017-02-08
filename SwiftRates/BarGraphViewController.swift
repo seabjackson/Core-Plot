@@ -21,8 +21,11 @@
  */
 
 import UIKit
+import CorePlot
 
 class BarGraphViewController: UIViewController {
+  
+  @IBOutlet var hostView: CPTGraphHostingView!
   
   @IBOutlet weak var label1: UILabel!
   @IBOutlet weak var label2: UILabel!
@@ -31,6 +34,15 @@ class BarGraphViewController: UIViewController {
   var base: Currency!
   var rates: [Rate]!
   var symbols: [Currency]!
+  
+  var plot1: CPTBarPlot!
+  var plot2: CPTBarPlot!
+  var plot3: CPTBarPlot!
+
+  let barWidth = 0.25
+  let barInitialX = 0.25
+  
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,6 +53,103 @@ class BarGraphViewController: UIViewController {
     label1.text = base.name
     label2.text = symbols[0].name
     label3.text = symbols[1].name
+  }
+  
+  func highestRateValue() -> Double {
+    var maxRate = DBL_MIN
+    for rate in rates {
+      maxRate = max(maxRate, rate.maxRate().doubleValue)
+    }
+    return maxRate
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    initPlot()
+  }
+  
+  func initPlot() {
+    configureHostView()
+    configureGraph()
+    configureChart()
+    configureAxes()
+  }
+  
+  func configureHostView() {
+    hostView.allowPinchScaling = false
+  }
+  
+  func configureGraph() {
+    // create the graph
+    
+    let graph = CPTXYGraph(frame: hostView.bounds)
+    graph.plotAreaFrame?.masksToBorder = false
+    hostView.hostedGraph = graph
+    
+    // configure the graph
+    graph.apply(CPTTheme(named: CPTThemeName.plainWhiteTheme))
+    graph.fill = CPTFill(color: CPTColor.clear())
+    graph.paddingBottom = 30.0
+    graph.paddingLeft = 30.0
+    graph.paddingTop = 0.0
+    graph.paddingRight = 0.0
+    
+    // set up styles
+    let titleStyle = CPTMutableTextStyle()
+    titleStyle.color = CPTColor.black()
+    titleStyle.fontName = "HelveticaNeue-Bold"
+    titleStyle.fontSize = 16.0
+    titleStyle.textAlignment = .center
+    graph.titleTextStyle = titleStyle
+    
+    let title = "\(base.name) exchange rates \n\(rates.first!.date) - \(rates.last!.date)"
+    graph.title = title
+    graph.titlePlotAreaFrameAnchor = .top
+    graph.titleDisplacement = CGPoint(x: 0.0, y: -16.0)
+    
+    // set up plot space
+    let xMin = 0.0
+    let xMax = Double(rates.count)
+    let yMin = 0.0
+    let yMax = 1.4 * highestRateValue()
+    
+    guard let plotSpace = graph.defaultPlotSpace as? CPTXYPlotSpace else { return }
+    plotSpace.xRange = CPTPlotRange(locationDecimal: CPTDecimalFromDouble(xMin), lengthDecimal: CPTDecimalFromDouble(xMax - xMin))
+    plotSpace.yRange = CPTPlotRange(locationDecimal: CPTDecimalFromDouble(yMin)
+      , lengthDecimal: CPTDecimalFromDouble(yMax - yMin))
+  }
+  
+  func configureChart() {
+    // set up the three plots
+    plot1 = CPTBarPlot()
+    plot1.fill = CPTFill(color: CPTColor(componentRed: 0.92, green: 0.28, blue: 0.25, alpha: 1.00))
+    plot2 = CPTBarPlot()
+    plot2.fill = CPTFill(color: CPTColor(componentRed: 0.06, green: 0.80, blue: 0.48, alpha: 1.00))
+    plot3 = CPTBarPlot()
+    plot3.fill = CPTFill(color: CPTColor(componentRed: 0.22, green: 0.33, blue: 0.49, alpha: 1.00))
+    
+    // set up line style
+    let barLineStyle = CPTMutableLineStyle()
+    barLineStyle.lineColor = CPTColor.lightGray()
+    barLineStyle.lineWidth = 0.5
+    
+    // add plots to graph
+    guard let graph = hostView.hostedGraph else { return }
+    var barX = barInitialX
+    let plots = [plot1!, plot2!, plot3!]
+    for plot: CPTBarPlot in plots {
+      plot.dataSource = self
+      plot.delegate = self
+      plot.barWidth = NSNumber(value: barWidth)
+      plot.barOffset = NSNumber(value: barX)
+      plot.lineStyle = barLineStyle
+      graph.add(plot, to: graph.defaultPlotSpace)
+      barX += barWidth
+    }
+  }
+  
+  func configureAxes() {
+    
   }
 }
 
@@ -61,3 +170,62 @@ extension BarGraphViewController {
   }
   
 }
+
+extension BarGraphViewController: CPTBarPlotDataSource, CPTBarPlotDelegate {
+  func numberOfRecords(for plot: CPTPlot) -> UInt {
+    return UInt(rates.count)
+  }
+  
+  func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
+    if fieldEnum == UInt(CPTBarPlotField.barTip.rawValue) {
+      if plot == plot1 {
+        return 1.0 as AnyObject?
+      }
+      
+      if plot == plot2 {
+        return rates[Int(idx)].rates[symbols[0].name]!
+      }
+      
+      if plot == plot3 {
+        return rates[Int(idx)].rates[symbols[1].name]!
+      }
+    }
+    return idx
+  }
+  
+  func barPlot(_ plot: CPTBarPlot, barWasSelectedAtRecord idx: UInt, with event: UIEvent) {
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

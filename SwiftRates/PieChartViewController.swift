@@ -108,7 +108,27 @@ class PieChartViewController: UIViewController {
   }
   
   func configureLegend() {
+    // get the graph instance
+    guard let graph = hostView.hostedGraph else { return }
     
+    let theLegend = CPTLegend(graph: graph)
+    
+    // configure the legend
+    theLegend.numberOfColumns = 1
+    theLegend.fill = CPTFill(color: CPTColor.white())
+    let textStyle = CPTMutableTextStyle()
+    textStyle.fontSize = 18
+    theLegend.textStyle = textStyle
+    
+    // add the legend to graph
+    graph.legend = theLegend
+    if view.bounds.width > view.bounds.height {
+      graph.legendAnchor = .right
+      graph.legendDisplacement = CGPoint(x: -20, y: 0.0)
+    } else {
+      graph.legendAnchor = .bottomRight
+      graph.legendDisplacement = CGPoint(x: -8.0, y: 8.0)
+    }
   }
   
 }
@@ -147,7 +167,7 @@ extension PieChartViewController: CPTPieChartDataSource, CPTPieChartDelegate {
   }
   
   func legendTitle(for pieChart: CPTPieChart, record idx: UInt) -> String? {
-    return nil
+    return symbols[Int(idx)].name
   }
   
   

@@ -365,14 +365,23 @@
                                     <constraint firstItem="Hry-vi-mZf" firstAttribute="top" secondItem="W3h-gj-tdb" secondAttribute="top" id="zHS-uV-clO"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icK-cU-xiX" customClass="CPTGraphHostingView">
+                                <rect key="frame" x="0.0" y="53" width="375" height="614"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.74826971480000004" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="icK-cU-xiX" firstAttribute="leading" secondItem="PzM-iX-hrr" secondAttribute="leading" id="2R7-Pb-NTe"/>
                             <constraint firstItem="qQx-yy-w0e" firstAttribute="top" secondItem="PzM-iX-hrr" secondAttribute="topMargin" id="7AX-6j-cHA"/>
                             <constraint firstItem="qQx-yy-w0e" firstAttribute="centerX" secondItem="PzM-iX-hrr" secondAttribute="centerX" id="Kvk-Rx-cs4"/>
+                            <constraint firstItem="NgI-3v-gwv" firstAttribute="top" secondItem="icK-cU-xiX" secondAttribute="bottom" id="UUw-Yx-Szn"/>
+                            <constraint firstItem="icK-cU-xiX" firstAttribute="top" secondItem="qQx-yy-w0e" secondAttribute="bottom" constant="8" id="jFM-Ey-Jdt"/>
+                            <constraint firstAttribute="trailing" secondItem="icK-cU-xiX" secondAttribute="trailing" id="mEo-Px-g6Z"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="hostView" destination="icK-cU-xiX" id="X0y-j5-UVn"/>
                         <outlet property="label1" destination="GCj-Dk-Jng" id="Cec-Mn-xCS"/>
                         <outlet property="label2" destination="SoZ-Js-Twy" id="07I-og-dFb"/>
                         <outlet property="label3" destination="W3h-gj-tdb" id="6rs-PR-j4a"/>
@@ -380,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2S-fk-87s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2290" y="1505"/>
+            <point key="canvasLocation" x="2288.8000000000002" y="1504.4977511244379"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="umu-Mv-z04">

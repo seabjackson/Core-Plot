@@ -149,7 +149,48 @@ class BarGraphViewController: UIViewController {
   }
   
   func configureAxes() {
+    // configure styles
+    let axisLineStyle = CPTMutableLineStyle()
+    axisLineStyle.lineWidth = 2.0
+    axisLineStyle.lineColor = CPTColor.blue()
     
+    // get the graph axis set
+    guard let axisSet = hostView.hostedGraph?.axisSet as? CPTXYAxisSet else { return }
+    
+    // configure the x axis
+    if let xAxis = axisSet.xAxis {
+      xAxis.labelingPolicy = .none
+      xAxis.majorIntervalLength = 1
+      xAxis.axisLineStyle = axisLineStyle
+      var majorTickLocations = Set<NSNumber>()
+      var axisLabels = Set<CPTAxisLabel>()
+      for (idx, rate) in rates.enumerated() {
+        majorTickLocations.insert(NSNumber(value: idx))
+        let label = CPTAxisLabel(text: "\(rate.date)", textStyle: CPTTextStyle())
+        label.tickLocation = NSNumber(value: idx)
+        label.offset = 5.0
+        label.alignment = .left
+        axisLabels.insert(label)
+      }
+      xAxis.majorTickLocations = majorTickLocations
+      xAxis.axisLabels = axisLabels
+    }
+    
+    // configure the y axis
+    if let yAxis = axisSet.yAxis {
+      yAxis.labelingPolicy = .fixedInterval
+      yAxis.labelOffset = -10.0
+      yAxis.minorTicksPerInterval = 3
+      yAxis.majorTickLength = 30
+      let majorTickLineStyle = CPTMutableLineStyle()
+      majorTickLineStyle.lineColor = CPTColor.black().withAlphaComponent(0.1)
+      yAxis.majorTickLineStyle = majorTickLineStyle
+      yAxis.minorTickLength = 20
+      let minorTickLineStyle = CPTMutableLineStyle()
+      minorTickLineStyle.lineColor = CPTColor.black().withAlphaComponent(0.05)
+      yAxis.minorTickLineStyle = minorTickLineStyle
+      yAxis.axisLineStyle = axisLineStyle
+    }
   }
 }
 
@@ -191,7 +232,7 @@ extension BarGraphViewController: CPTBarPlotDataSource, CPTBarPlotDelegate {
       }
     }
     return idx
-  }
+   }
   
   func barPlot(_ plot: CPTBarPlot, barWasSelectedAtRecord idx: UInt, with event: UIEvent) {
     

@@ -6,33 +6,43 @@
 	<dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>CorePlot.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-SwiftRates.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SwiftDate.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4D5C0B49AA24FCE00683039F2BCB6C5C</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6E121467981448DA6B5C811BCFEBEB8A</key>
+		<key>C8072DB13C752755E110B141CA7EABED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<key>CD66EC92E1BB8152638AEE4EF6B12D36</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE8C7C227ACE26864DC8DA02CCA66BAA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

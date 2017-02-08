@@ -1,15 +1,18 @@
 PODS:
   - Alamofire (4.0.1)
+  - CorePlot (2.2)
   - SwiftDate (4.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
+  - CorePlot (~> 2.2)
   - SwiftDate (~> 4.0)
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
   SwiftDate: a1770324d1dd4e94b4788aca8378e63fc93b29de
 
-PODFILE CHECKSUM: 030ff5ef494dfbdc0ec19640cd274a77b32cadd2
+PODFILE CHECKSUM: 2edb0974168145e635bbde823d727558447eb09a
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.0

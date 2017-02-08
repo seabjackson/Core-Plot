@@ -4,4 +4,5 @@ use_frameworks!
 target 'SwiftRates' do
   pod 'Alamofire', '~> 4.0'
   pod 'SwiftDate', '~> 4.0'
+  pod 'CorePlot', '~> 2.2'
 end

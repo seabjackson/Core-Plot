@@ -42,6 +42,7 @@ class BarGraphViewController: UIViewController {
   let barWidth = 0.25
   let barInitialX = 0.25
   
+  var priceAnnotation: CPTPlotSpaceAnnotation?
   
   
   override func viewDidLoad() {
@@ -235,7 +236,45 @@ extension BarGraphViewController: CPTBarPlotDataSource, CPTBarPlotDelegate {
    }
   
   func barPlot(_ plot: CPTBarPlot, barWasSelectedAtRecord idx: UInt, with event: UIEvent) {
+    if plot.isHidden == true {
+      return
+    }
     
+    let style = CPTMutableTextStyle()
+    style.fontSize = 12.0
+    style.fontName = "HelveticaNeue-Bold"
+    
+    // create annotation
+    guard let price = number(for: plot, field: UInt(CPTBarPlotField.barTip.rawValue), record: idx) as? CGFloat else { return }
+    priceAnnotation?.annotationHostLayer?.removeAnnotation(priceAnnotation)
+    priceAnnotation = CPTPlotSpaceAnnotation(plotSpace: plot.plotSpace!, anchorPlotPoint: [0.0])
+    
+    // create number formatter
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 2
+    
+    // create text layer for annotation
+    let priceValue = formatter.string(from: NSNumber(cgFloat: price))
+    let textLayer = CPTTextLayer(text: priceValue, style: style)
+    priceAnnotation!.contentLayer = textLayer
+    
+    var plotIndex: Int = 0
+    if plot == plot1 {
+      plotIndex = 0
+    }
+    else if plot == plot2 {
+      plotIndex = 1
+    }
+    else if plot == plot3 {
+      plotIndex = 2
+    }
+    // 7 - Get the anchor point for annotation
+    let x = CGFloat(idx) + CGFloat(barInitialX) + (CGFloat(plotIndex) * CGFloat(barWidth))
+    let y = CGFloat(price) + 0.05
+    priceAnnotation!.anchorPlotPoint = [NSNumber(cgFloat: x), NSNumber(cgFloat: y)]
+    // 8 - Add the annotation
+    guard let plotArea = plot.graph?.plotAreaFrame?.plotArea else { return }
+    plotArea.addAnnotation(priceAnnotation)
   }
 }
 

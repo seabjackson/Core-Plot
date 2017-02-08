@@ -200,15 +200,38 @@ class BarGraphViewController: UIViewController {
 extension BarGraphViewController {
   
   @IBAction func switch1Changed(_ sender: UISwitch) {
-    
+    let on = sender.isOn
+    if !on {
+      hideAnnotation(graph: plot1.graph!)
+    }
+    plot1.isHidden = !on
   }
   
   @IBAction func switch2Changed(_ sender: UISwitch) {
-    
+    let on = sender.isOn
+    if !on {
+      hideAnnotation(graph: plot2.graph!)
+    }
+    plot2.isHidden = !on
+
   }
   
   @IBAction func switch3Changed(_ sender: UISwitch) {
-    
+    let on = sender.isOn
+    if !on {
+      hideAnnotation(graph: plot3.graph!)
+    }
+    plot3.isHidden = !on
+
+  }
+  
+  func hideAnnotation(graph: CPTGraph) {
+    guard let plotArea = graph.plotAreaFrame?.plotArea,
+      let priceAnnotation = priceAnnotation else {
+        return
+    }
+    plotArea.removeAnnotation(priceAnnotation)
+    self.priceAnnotation = nil
   }
   
 }
